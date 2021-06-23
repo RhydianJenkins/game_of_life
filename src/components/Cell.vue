@@ -1,6 +1,6 @@
 <template>
   <div class="game-of-life__cell">
-    <p>{{ `${position.x}, ${position.y}` }}</p>
+    {{ `${data.x}, ${data.y}` }}
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'Cell',
   props: {
-    position: {
+    data: {
       type: Object,
       required: true
     },
@@ -23,7 +23,16 @@ export default {
 <style scoped>
 .game-of-life__cell {
     border: 1px solid;
-    width: 64px;
-    height: 64px;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+
+    .alive {
+        background-color: white;
+    }
+
+    .dead {
+        background-color: black;
+    }
 }
 </style>

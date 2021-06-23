@@ -1,13 +1,14 @@
 <template>
   <div class="game-of-life">
-    <div v-for="(row, rowIndex) in grid" :key="rowIndex">
-      <div v-for="(col, colIndex) in row" :key="colIndex">
+    <div class="game-of-life__grid" v-for="(row, rowIndex) in grid" :key="rowIndex">
+      <div v-for="(cell, colIndex) in row" :key="colIndex">
         <Cell
-          :position="{ x: rowIndex, y: colIndex }"
-          :neighbours="getCellNeighbours()"
+          :data="cell"
+          :neighbours="getCellNeighbours(rowIndex)"
         />
       </div>
     </div>
+    <button class="game-of-life__button" @click="iterate()">Next</button>
   </div>
 </template>
 
@@ -32,35 +33,43 @@ export default {
   },
   methods: {
     getCell(x, y) {
-      return this.grid[x][y] || {};
+      const xWrapped = Math.abs(x % this.size);
+      const yWrapped = Math.abs(y % this.size);
+      return this.grid[xWrapped][yWrapped];
     },
     getCellNeighbours(x, y) {
       return {
-        NW: this.getCell(),
-        N: {},
-        NE: {},
-        E: {},
-        SE: {},
-        S: {},
-        SW: {},
-        W: {},
+        NW: this.getCell(--x, --y),
+        N: this.getCell(x, --y),
+        NE: this.getCell(++x, --y),
+        E: this.getCell(++x, y),
+        SE: this.getCell(++x, ++y),
+        S: this.getCell(x, ++y),
+        SW: this.getCell(--x, ++y),
+        W: this.getCell(--x, y)
       };
+    },
+    iterate() {
+      console.log('iterate!');
     }
   },
   created() {
     for (let x = 0; x < this.size; x++) {
       this.grid.push([])
       for (let y = 0; y < this.size; y++) {
-        this.grid[i].push({ x: i })
+        this.grid[x].push({ x: x, y: y })
       }
     }
-    // console.log(this.getCell(4, 4));
   }
 }
 </script>
 
 <style scoped>
-.game-of-life {
+.game-of-life__grid {
   display: flex;
+}
+
+.game-of-life__button {
+  margin-top: 10px;
 }
 </style>
