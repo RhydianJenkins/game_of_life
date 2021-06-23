@@ -1,10 +1,11 @@
 <template>
   <div class="game-of-life">
+    <h1>Game of Life</h1>
     <div class="game-of-life__grid" v-for="(row, rowIndex) in grid" :key="rowIndex">
       <div v-for="(cell, colIndex) in row" :key="colIndex">
         <Cell
+          :grid="grid"
           :data="cell"
-          :neighbours="getCellNeighbours(rowIndex)"
         />
       </div>
     </div>
@@ -13,7 +14,9 @@
 </template>
 
 <script>
+import { bus } from '../main.js'
 import Cell from './Cell.vue'
+import STATE from '../assets/states.js';
 
 export default {
   name: 'GameOfLife',
@@ -28,48 +31,55 @@ export default {
   },
   data() {
     return {
-      grid: []
+      grid: [],
+      STATE
     };
   },
   methods: {
-    getCell(x, y) {
-      const xWrapped = Math.abs(x % this.size);
-      const yWrapped = Math.abs(y % this.size);
-      return this.grid[xWrapped][yWrapped];
-    },
-    getCellNeighbours(x, y) {
-      return {
-        NW: this.getCell(--x, --y),
-        N: this.getCell(x, --y),
-        NE: this.getCell(++x, --y),
-        E: this.getCell(++x, y),
-        SE: this.getCell(++x, ++y),
-        S: this.getCell(x, ++y),
-        SW: this.getCell(--x, ++y),
-        W: this.getCell(--x, y)
-      };
-    },
     iterate() {
-      console.log('iterate!');
+      bus.$emit('calculateNextState');
+      bus.$emit('update');
+    },
+    buildGrid(size) {
+      for (let x = 0; x < size; x++) {
+        this.grid.push([])
+        for (let y = 0; y < size; y++) {
+          const cell = { x: x, y: y };
+          // cell['initialState'] = y % 2 === 0 ? this.STATE.ALIVE : this.STATE.DEAD;
+          cell['initialState'] = this.STATE.DEAD;
+          cell['state'] = cell['initialState'];
+          this.grid[x].push(cell)
+        }
+      }
+
+      // add alive cells
+      this.grid[4][2].state = this.STATE.ALIVE;
+      this.grid[4][2].initialState = this.STATE.ALIVE;
+      this.grid[4][3].state = this.STATE.ALIVE;
+      this.grid[4][3].initialState = this.STATE.ALIVE;
+      this.grid[4][4].state = this.STATE.ALIVE;
+      this.grid[4][4].initialState = this.STATE.ALIVE;
     }
   },
   created() {
-    for (let x = 0; x < this.size; x++) {
-      this.grid.push([])
-      for (let y = 0; y < this.size; y++) {
-        this.grid[x].push({ x: x, y: y })
-      }
-    }
+    this.buildGrid(this.size);
   }
 }
 </script>
 
 <style scoped>
+.game-of-life {
+  width: 80vw;
+  margin: 0 auto;
+}
+
 .game-of-life__grid {
+  justify-content: center;
   display: flex;
 }
 
 .game-of-life__button {
   margin-top: 10px;
+  width: 64px;
 }
 </style>
