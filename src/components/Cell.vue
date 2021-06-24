@@ -104,24 +104,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .game-of-life__cell {
     border: 1px black;
     border-width: thin;
     width: 16px;
     height: 16px;
     text-align: center;
-}
 
-.game-of-life__cell--alive {
-    width: 100%;
-    height: 100%;
-    background-color: red;
-}
+    &--alive {
+        width: 100%;
+        height: 100%;
+        background-color: red;
+    }
 
-.game-of-life__cell--dead {
-    width: 100%;
-    height: 100%;
-    background-color: green;
+    &--dead {
+        width: 100%;
+        height: 100%;
+        background-color: green;
+    }
 }
 </style>

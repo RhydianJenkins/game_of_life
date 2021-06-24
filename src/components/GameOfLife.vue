@@ -67,19 +67,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .game-of-life {
   width: 80vw;
   margin: 0 auto;
-}
 
-.game-of-life__grid {
-  justify-content: center;
-  display: flex;
-}
+  &__grid {
+    justify-content: center;
+    display: flex;
+  }
 
-.game-of-life__button {
-  margin-top: 10px;
-  width: 64px;
+  &__button {
+    margin-top: 10px;
+    width: 64px;
+  }
 }
 </style>
