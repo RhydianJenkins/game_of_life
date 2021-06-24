@@ -108,8 +108,8 @@ export default {
 .game-of-life__cell {
     border: 1px black;
     border-width: thin;
-    width: 8px;
-    height: 8px;
+    width: 16px;
+    height: 16px;
     text-align: center;
 }
 

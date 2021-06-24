@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <GameOfLife
-      :size="5"
+      :size="20"
     />
   </div>
 </template>
