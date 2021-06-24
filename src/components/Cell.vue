@@ -1,5 +1,5 @@
 <template>
-    <div class="game-of-life__cell">
+    <div class="game-of-life__cell" @click="toggleState">
         <div :class="cellStateClass"/>
     </div>
 </template>
@@ -65,6 +65,10 @@ export default {
             const xWrapped = (x % this.gridSize + this.gridSize) % this.gridSize
             const yWrapped = (y % this.gridSize + this.gridSize) % this.gridSize
             return this.grid[xWrapped][yWrapped];
+        },
+        toggleState() {
+            const oppositeState = this.data.state === STATE.DEAD ? STATE.ALIVE : STATE.DEAD;
+            Vue.set(this.data, 'state', oppositeState);
         }
     },
     computed: {
