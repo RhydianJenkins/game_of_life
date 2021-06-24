@@ -1,6 +1,13 @@
 <template>
   <div class="game-of-life">
     <h1>Game of Life</h1>
+    <h2>Rules</h2>
+    <ul>
+      <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
+      <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+      <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+      <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+    </ul>
     <div class="game-of-life__grid" v-for="(row, rowIndex) in grid" :key="rowIndex">
       <div v-for="(cell, colIndex) in row" :key="colIndex">
         <Cell
@@ -9,6 +16,8 @@
         />
       </div>
     </div>
+    <p><span style="color: red">RED</span> = alive, <span style="color: green">GREEN</span> = dead.</p>
+    <p>Click on cells to toggle their states, and click 'Next' to iterate to the next generation.</p>
     <button class="game-of-life__button" @click="iterate()">Next</button>
   </div>
 </template>
@@ -51,14 +60,6 @@ export default {
           this.grid[x].push(cell)
         }
       }
-
-      // add alive cells
-      this.grid[4][2].state = this.STATE.ALIVE;
-      this.grid[4][2].initialState = this.STATE.ALIVE;
-      this.grid[4][3].state = this.STATE.ALIVE;
-      this.grid[4][3].initialState = this.STATE.ALIVE;
-      this.grid[4][4].state = this.STATE.ALIVE;
-      this.grid[4][4].initialState = this.STATE.ALIVE;
     }
   },
   created() {
