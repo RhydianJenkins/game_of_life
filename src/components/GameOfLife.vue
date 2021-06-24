@@ -1,37 +1,39 @@
 <template>
-  <div class="game-of-life">
-    <h1>Game of Life</h1>
-    <h2>Rules</h2>
-    <ul>
-      <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
-      <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
-      <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
-      <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
-    </ul>
-    <div class="game-of-life__grid">
-      <div v-for="(row, rowIndex) in grid" :key="rowIndex">
-        <div v-for="(cell, colIndex) in row" :key="colIndex">
-          <div class="game-of-life__cell" @click="toggleState(cell)">
+  <div>
+    <div class="game-of-life">
+      <h1>Game of Life</h1>
+      <h2>Rules</h2>
+      <ul>
+        <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
+        <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+        <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
+        <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+      </ul>
+      <div class="game-of-life__grid">
+        <div class="game-of-life__row" v-for="(row, rowIndex) in grid" :key="rowIndex">
+          <div class="game-of-life__cell" v-for="(cell, colIndex) in row" :key="colIndex" @click="toggleState(cell)">
             <Cell :data="cell" />
           </div>
         </div>
       </div>
+
+      <p><span style="color: black">BLACK</span> = alive, <span style="color: green">GREEN</span> = dead.</p>
     </div>
-    <p><span style="color: red">RED</span> = alive, <span style="color: green">GREEN</span> = dead.</p>
-    <p>Click on cells to toggle their states, and click 'Next' to iterate to the next generation.</p>
-    <button class="game-of-life__button btn btn-primary" @click="iterate()">Next</button>
+    <Controls @iterate-invoked="iterate()"/>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import Cell from './Cell.vue'
+import Controls from './Controls.vue'
 import STATE from '../assets/states.js';
 
 export default {
   name: 'GameOfLife',
   components: {
-    Cell
+    Cell,
+    Controls
   },
   props: {
     size: {
@@ -137,7 +139,7 @@ export default {
 
 <style lang="scss">
 .game-of-life {
-  width: 80vw;
+  // width: 80vw;
   margin: 0 auto;
 
   &__grid {
@@ -145,24 +147,17 @@ export default {
     display: flex;
   }
 
-  &__button {
-    cursor: pointer;
-    margin-top: 10px;
-    width: 64px;
-  }
-
   &__cell {
     cursor: pointer;
-    border: 1px black;
-    border-width: thin;
-    width: 8px;
-    height: 8px;
+    width: 20px;
+    height: 20px;
     text-align: center;
+    border: 1px solid;
 
     &--alive {
       width: 100%;
       height: 100%;
-      background-color: red;
+      background-color: black;
     }
 
     &--dead {
@@ -171,6 +166,5 @@ export default {
       background-color: green;
     }
   }
-
 }
 </style>
