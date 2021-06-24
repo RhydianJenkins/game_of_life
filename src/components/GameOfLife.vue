@@ -1,38 +1,24 @@
 <template>
   <div>
-    <div class="game-of-life">
-      <h1>Game of Life</h1>
-      <h2>Rules</h2>
-      <ul>
-        <li>Any live cell with fewer than two live neighbours dies, as if by underpopulation.</li>
-        <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
-        <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
-        <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
-      </ul>
-      <div class="game-of-life__grid">
-        <div class="game-of-life__row" v-for="(row, rowIndex) in grid" :key="rowIndex">
-          <div class="game-of-life__cell" v-for="(cell, colIndex) in row" :key="colIndex" @click="toggleState(cell)">
-            <Cell :data="cell" />
-          </div>
-        </div>
-      </div>
-
-      <p><span style="color: black">BLACK</span> = alive, <span style="color: green">GREEN</span> = dead.</p>
-    </div>
+    <h1 class="display-1 text-center">Game of Life</h1>
+    <RulesPopover/>
+    <GameOfLifeGrid class="game-of-life" :grid="grid"/>
     <Controls @iterate-invoked="iterate()"/>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import Cell from './Cell.vue'
+import RulesPopover from './RulesPopover.vue'
+import GameOfLifeGrid from './GameOfLifeGrid.vue'
 import Controls from './Controls.vue'
 import STATE from '../assets/states.js';
 
 export default {
   name: 'GameOfLife',
   components: {
-    Cell,
+    RulesPopover,
+    GameOfLifeGrid,
     Controls
   },
   props: {
@@ -125,10 +111,6 @@ export default {
       const xWrapped = (x % this.size + this.size) % this.size
       const yWrapped = (y % this.size + this.size) % this.size
       return this.grid[xWrapped][yWrapped];
-    },
-    toggleState(cell = {}) {
-      const oppositeState = cell.state === STATE.DEAD ? STATE.ALIVE : STATE.DEAD;
-      Vue.set(cell, 'state', oppositeState);
     }
   },
   created() {
@@ -139,7 +121,6 @@ export default {
 
 <style lang="scss">
 .game-of-life {
-  // width: 80vw;
   margin: 0 auto;
 
   &__grid {

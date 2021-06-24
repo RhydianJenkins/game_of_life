@@ -1,9 +1,14 @@
 <template>
-    <div class="game-of-life__controls">
-        <p>Click on cells to toggle their states. Toggle slider to change generation frequency.</p>
-        <button class="game-of-life__button--pause btn btn-primary" @click="playClicked"><b-icon icon="play" /></button>
-        <input class="game-of-life__slider" type="range" :min="minSlider" :max="maxSlider" step="1" v-model="sliderVal" @change="sliderChanged" />
-        <button class="game-of-life__button--play btn btn-secondary" @click="pauseClicked"><b-icon icon="pause" /></button>
+    <div>
+        <div class="game-of-life__controls--instructions">
+            <p><span style="color: black">BLACK</span> = alive | <span style="color: green">GREEN</span> = dead</p>
+            <p>Click on cells to toggle their states. Toggle slider to change generation frequency.</p>
+        </div>
+        <div class="game-of-life__controls">
+            <b-button class="game-of-life__button--pause" @click="playClicked"><b-icon icon="play" /></b-button>
+            <input class="game-of-life__slider" type="range" :min="minSlider" :max="maxSlider" step="1" v-model="sliderVal" @change="sliderChanged" />
+            <b-button class="game-of-life__button--play" @click="pauseClicked"><b-icon icon="pause" /></b-button>
+        </div>
     </div>
 </template>
 
@@ -62,6 +67,16 @@ export default {
 
 <style lang="scss" scoped>
 .game-of-life {
+    &__controls {
+        display: flex;
+        justify-content: center;
+
+        &--instructions {
+            margin-top: 10px;
+            text-align: center;
+        }
+    }
+
     &__button--pause {
         margin: 5px;
     }
