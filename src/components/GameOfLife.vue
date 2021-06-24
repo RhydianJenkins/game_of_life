@@ -19,7 +19,7 @@
     </div>
     <p><span style="color: red">RED</span> = alive, <span style="color: green">GREEN</span> = dead.</p>
     <p>Click on cells to toggle their states, and click 'Next' to iterate to the next generation.</p>
-    <button class="game-of-life__button" @click="iterate()">Next</button>
+    <button class="game-of-life__button btn btn-primary" @click="iterate()">Next</button>
   </div>
 </template>
 
