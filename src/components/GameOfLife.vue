@@ -8,10 +8,12 @@
       <li>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
       <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
     </ul>
-    <div class="game-of-life__grid" v-for="(row, rowIndex) in grid" :key="rowIndex">
-      <div v-for="(cell, colIndex) in row" :key="colIndex">
-        <div class="game-of-life__cell" @click="toggleState(cell)">
-          <Cell :data="cell" />
+    <div class="game-of-life__grid">
+      <div v-for="(row, rowIndex) in grid" :key="rowIndex">
+        <div v-for="(cell, colIndex) in row" :key="colIndex">
+          <div class="game-of-life__cell" @click="toggleState(cell)">
+            <Cell :data="cell" />
+          </div>
         </div>
       </div>
     </div>
