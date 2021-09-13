@@ -13,3 +13,4 @@ git clone https://github.com/RhydianJenkins/game_of_life.git && cd game_of_life
 npm i
 npm run serve -- --open
 ```
+![image](https://user-images.githubusercontent.com/9198690/133149496-b3b54c01-d72f-47f5-bd11-d3e1ffe80600.png)
